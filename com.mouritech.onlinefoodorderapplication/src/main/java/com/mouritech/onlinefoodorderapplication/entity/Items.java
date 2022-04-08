@@ -33,7 +33,6 @@ public class Items {
 		
 		@ManyToOne(fetch = FetchType.EAGER)
 		@JoinColumn(name = "restaurant_id")
-		 @JsonIgnore
 		private Restaurant restaurant;
 		
 

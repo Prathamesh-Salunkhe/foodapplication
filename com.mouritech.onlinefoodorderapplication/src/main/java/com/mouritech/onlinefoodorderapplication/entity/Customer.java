@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="customer")
@@ -52,8 +54,8 @@ public class Customer {
 	
 	@Column(name = "customer_pincode", nullable = false)
 	private String customerPincode;
-	
-	@OneToOne(mappedBy = "customer" , orphanRemoval = true, cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+	@JsonIgnore
+	@OneToOne(mappedBy = "customer" , orphanRemoval = true, cascade = CascadeType.MERGE , fetch = FetchType.LAZY)
 	private FoodCart foodCart;
 	public Long getCustomerId() {
 		return customerId;

@@ -14,6 +14,7 @@ public interface FoodCartRepository extends JpaRepository<FoodCart, Long>{
 	List<FoodCart> findByItems_ItemId(long itemId);
 
 	Optional<FoodCart> findByCustomer_CustomerId(Long customerId);
+//	FoodCart findByCustomer_CustomerId(Long customerId);
 
 
 

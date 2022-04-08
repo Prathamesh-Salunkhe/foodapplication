@@ -89,27 +89,44 @@ public class FoodCartServiceImpl implements FoodCartService {
 		// write if condition if the cart for the customer exsists
 		
 		Optional<FoodCart> existingCart = cartRepository.findByCustomer_CustomerId(existingcustomer.getCustomerId());
-		if(!existingCart.isPresent())
-			return null;
+		FoodCart foodCartData=null;
+
+		if(!existingCart.isPresent()) {
+			foodCartData=new FoodCart();
+			foodCartData.setCartId(generateCustId());
+		}
+
 		else {
+			foodCartData=existingCart.get();
+			foodCartData.setCartId(existingcustomer.getFoodCart().getCartId());	
+
+
+		}
 			
+		
 		List<Items> restItems = restaurant.getItems();
 		for (Items result : restItems) {
 			if(result.getItemName().equals(itemName)) {
-				FoodCart foodCart = new FoodCart();
 				myList.add(result);
-				foodCart.setCartId(generateCustId());
-				foodCart.setItems(myList);
-				foodCart.setCustomer(existingcustomer);
-				foodCart.setCartId(existingcustomer.getFoodCart().getCartId());	
-				
-				cartRepository.save(foodCart);
 			
-				return foodCart;
-			}
+//				foodCartData.setCartId(generateCustId());
+				foodCartData.setItems(restaurant.getItems());
+
+				
+//	foodCartData.setCartId(existingcustomer.getFoodCart().getCartId());	
+
+				
+			
+				foodCartData.setCustomer(existingcustomer);
+				
+				cartRepository.save(foodCartData);
+
+				return foodCartData;}
 		}
-		}
-		return null;
+			
+		return foodCartData;
+		
+		
 	}
 	
 	public long generateCustId() {
